@@ -1,0 +1,45 @@
+name: woocommerce_app
+description: A Flutter application for WooCommerce integration.
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.3
+  provider: ^5.0.0
+  flutter_localizations:
+    sdk: flutter
+  flutter_staggered_grid_view: ^0.4.0
+  flutter_lints: ^2.0.0 # Added flutter_lints package
+  flutter_carousel_widget: ^2.2.0
+  cached_network_image: ^3.2.3
+  shimmer: ^3.0.0
+  flutter_rating_bar: ^4.0.1
+  badges: ^3.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # flutter_native_splash: ^2.2.16 # Temporarily disabled to fix build issue
+  flutter_launcher_icons: ^0.10.0 # Added for app icon
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/app_icon.png
+    - assets/splash_image.png
+
+# flutter_native_splash configuration temporarily disabled to fix build issue
+# flutter_native_splash:
+#   color: "#B50E00" # Background color for the splash screen
+#   image: assets/splash_image.png
+#   android:fullscreen: true
+#   ios:
+#     fullscreen: true
+#     remove: true
