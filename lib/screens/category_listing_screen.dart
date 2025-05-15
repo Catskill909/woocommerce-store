@@ -17,7 +17,8 @@ class _CategoryListingScreenState extends State<CategoryListingScreen> {
   @override
   void initState() {
     super.initState();
-    _categoriesFuture = _apiService.fetchCategories();
+    // Use the updated API service method with parameters
+    _categoriesFuture = _apiService.fetchCategories(perPage: 100);
   }
 
   @override
