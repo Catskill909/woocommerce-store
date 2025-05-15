@@ -1,3 +1,5 @@
+import '../utils/html_formatter.dart';
+
 class Brand {
   final int id;
   final String name;
@@ -22,8 +24,8 @@ class Brand {
   factory Brand.fromJson(Map<String, dynamic> json) {
     return Brand(
       id: json['id'],
-      name: json['name'] ?? '',
-      description: json['description'],
+      name: HtmlFormatter.stripHtml(json['name'] ?? ''),
+      description: json['description'] != null ? HtmlFormatter.stripHtml(json['description']) : null,
       slug: json['slug'],
       imageUrl: json['image'] != null ? json['image']['src'] : null,
       count: json['count'] ?? 0,

@@ -1,3 +1,5 @@
+import '../utils/html_formatter.dart';
+
 class Category {
   final int id;
   final String name;
@@ -26,8 +28,8 @@ class Category {
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
       id: json['id'],
-      name: json['name'] ?? '',
-      description: json['description'],
+      name: HtmlFormatter.stripHtml(json['name'] ?? ''),
+      description: json['description'] != null ? HtmlFormatter.stripHtml(json['description']) : null,
       slug: json['slug'],
       imageUrl: json['image'] != null ? json['image']['src'] : null,
       count: json['count'] ?? 0,

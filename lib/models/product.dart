@@ -1,3 +1,5 @@
+import '../utils/html_formatter.dart';
+
 class Product {
   final int id;
   final String name;
@@ -115,9 +117,9 @@ class Product {
 
     return Product(
       id: json['id'],
-      name: json['name'] ?? '',
-      description: json['description'] ?? '',
-      shortDescription: json['short_description'] ?? '',
+      name: HtmlFormatter.stripHtml(json['name'] ?? ''),
+      description: HtmlFormatter.stripHtml(json['description'] ?? ''),
+      shortDescription: HtmlFormatter.stripHtml(json['short_description'] ?? ''),
       permalink: json['permalink'] ?? '',
       sku: json['sku'] ?? '',
       status: json['status'] ?? 'publish',
