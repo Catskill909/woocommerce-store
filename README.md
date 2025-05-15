@@ -18,6 +18,19 @@ A modern Flutter mobile application that integrates with WooCommerce to provide 
 - Uses Provider for state management
 - Implements modern UI patterns with custom widgets
 
+## Development Roadmap
+
+This project follows a structured development plan to implement a full-featured WooCommerce store app. For detailed information about the implementation phases and timeline, please refer to the [Development Plan](plan.md).
+
+The roadmap includes:
+- Authentication & User Management
+- Shopping Cart & Checkout
+- Product Browsing Enhancements
+- Order Management & Notifications
+- Performance & UX Optimizations
+- Advanced Features
+- Analytics & Reporting
+
 ## Getting Started
 
 ### Prerequisites
