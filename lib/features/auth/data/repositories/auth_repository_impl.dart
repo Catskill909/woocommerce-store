@@ -25,7 +25,19 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final response = await remoteDataSource.login(request);
       await _cacheAuthData(response);
-      return response.user;
+      
+      // Return the user with the token
+      return User(
+        id: response.user.id,
+        email: response.user.email,
+        username: response.user.username,
+        firstName: response.user.firstName,
+        lastName: response.user.lastName,
+        displayName: response.user.displayName,
+        avatarUrl: response.user.avatarUrl,
+        token: response.token, // Make sure the token is included
+        isAdmin: response.user.isAdmin,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -34,9 +46,14 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<User> getCurrentUser() async {
     try {
-      // First try to get the user from the remote data source
-      final userData = await remoteDataSource.getCurrentUser();
+      // Get the token first
       final token = await secureStorage.read(key: _tokenKey);
+      if (token == null || token.isEmpty) {
+        throw const ServerException(message: 'No authentication token found');
+      }
+
+      // Get user data from the remote data source
+      final userData = await remoteDataSource.getCurrentUser();
       
       // Create user from remote data
       final user = User(
@@ -47,7 +64,7 @@ class AuthRepositoryImpl implements AuthRepository {
         lastName: userData['last_name'],
         displayName: userData['name'],
         avatarUrl: userData['avatar_urls']?['96'],
-        token: token,
+        token: token, // Make sure the token is included
         isAdmin: userData['roles']?.contains('administrator') ?? false,
       );
       

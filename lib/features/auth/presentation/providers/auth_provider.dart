@@ -28,7 +28,7 @@ class AuthProvider with ChangeNotifier {
 
   // Getters
   User? get user => _user;
-  bool get isAuthenticated => _user?.isAuthenticated ?? false;
+  bool get isAuthenticated => _user?.token?.isNotEmpty == true;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
@@ -88,12 +88,19 @@ class AuthProvider with ChangeNotifier {
         _user = await _authRepository.login(
           LoginRequestModel(username: username, password: password),
         );
+        
+        // Add debug prints to verify the user and token
+        debugPrint('User logged in: ${_user?.email}');
+        debugPrint('Token: ${_user?.token}');
+        
         return true;
       } on ServerException catch (e) {
-        _error = e.message; // message is non-nullable, so no need for null check
+        _error = e.message;
+        debugPrint('ServerException during login: ${e.message}');
         return false;
       } on CacheException {
         _error = 'Failed to save login information. Please try again.';
+        debugPrint('CacheException during login');
         return false;
       } catch (e) {
         _error = 'An unexpected error occurred. Please try again.';

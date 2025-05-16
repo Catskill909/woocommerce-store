@@ -53,6 +53,9 @@ The app uses JWT (JSON Web Tokens) for secure authentication with your WooCommer
 - User registration and login
 - Persistent login sessions
 - Password reset functionality
+- Form validation
+- Error handling and user feedback
+- Responsive design for all screen sizes
 
 ## ✨ Features
 

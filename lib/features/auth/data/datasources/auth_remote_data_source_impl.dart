@@ -122,10 +122,12 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<LoginResponseModel> signup(SignupRequestModel request) async {
-    // First, create the user account using WooCommerce API
     final signupUrl = Uri.parse('$baseUrl/wp-json/wc/v3/customers');
     
     try {
+      // Log the request for debugging
+      debugPrint('Signup request: ${request.toJson()}');
+      
       // Create the user account
       final signupResponse = await client.post(
         signupUrl,
@@ -134,21 +136,56 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
           'email': request.email,
           'username': request.username,
           'password': request.password,
-          'first_name': request.username, // Using username as first name
-          'last_name': '', // Empty last name as it's not required
+          'first_name': request.username,
+          'last_name': '',
         }),
       ).timeout(const Duration(seconds: 30));
 
+      // Log the response for debugging
+      debugPrint('Signup response: ${signupResponse.statusCode} - ${signupResponse.body}');
+
       if (signupResponse.statusCode == 201) {
         // After successful signup, log the user in using JWT
-        return login(LoginRequestModel(
-          username: request.email,
-          password: request.password,
-        ));
+        debugPrint('User account created successfully, attempting to log in...');
+        try {
+          final loginResponse = await login(LoginRequestModel(
+            username: request.email,
+            password: request.password,
+          ));
+          debugPrint('Auto-login after signup successful');
+          return loginResponse;
+        } catch (loginError) {
+          debugPrint('Auto-login after signup failed: $loginError');
+          // Even if auto-login fails, the account was created successfully
+          // So we'll throw a more specific error
+          throw const ServerException(
+            message: 'Account created but failed to log in automatically. Please try logging in manually.',
+            statusCode: 200, // Using 200 to indicate partial success
+          );
+        }
       } else {
-        final errorBody = jsonDecode(utf8.decode(signupResponse.bodyBytes));
+        String errorMessage = 'Failed to create user account';
+        try {
+          final errorBody = jsonDecode(utf8.decode(signupResponse.bodyBytes));
+          errorMessage = errorBody['message'] ?? errorMessage;
+          
+          // Handle specific WooCommerce error messages
+          if (errorBody['code'] == 'registration-error-email-exists') {
+            errorMessage = 'An account is already registered with this email address.';
+          } else if (errorBody['code'] == 'registration-error-username-exists') {
+            errorMessage = 'Username already exists. Please choose another one.';
+          } else if (errorBody['code'] == 'registration-error-invalid-email') {
+            errorMessage = 'Please provide a valid email address.';
+          } else if (errorBody['code'] == 'registration-error-weak-password') {
+            errorMessage = 'Password is too weak. Please choose a stronger password.';
+          }
+        } catch (e) {
+          debugPrint('Error parsing error response: $e');
+        }
+        
+        debugPrint('Signup error (${signupResponse.statusCode}): $errorMessage');
         throw ServerException(
-          message: errorBody['message'] ?? 'Failed to create user account',
+          message: errorMessage,
           statusCode: signupResponse.statusCode,
         );
       }

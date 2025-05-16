@@ -16,13 +16,13 @@ class SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
+  
   // Focus nodes for better form navigation
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
-
+  
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
@@ -195,9 +195,7 @@ class SignupScreenState extends State<SignupScreen> {
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      _obscurePassword ? Icons.visibility : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
@@ -209,8 +207,7 @@ class SignupScreenState extends State<SignupScreen> {
                 ),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
-                  FocusScope.of(context)
-                      .requestFocus(_confirmPasswordFocusNode);
+                  FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
                 },
                 validator: _validatePassword,
               ),
@@ -224,9 +221,7 @@ class SignupScreenState extends State<SignupScreen> {
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
@@ -255,8 +250,7 @@ class SignupScreenState extends State<SignupScreen> {
                         height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       )
                     : const Text(

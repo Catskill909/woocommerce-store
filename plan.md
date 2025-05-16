@@ -8,26 +8,28 @@ This document outlines the development roadmap for implementing a full-featured 
 
 ### 1.1 JWT Authentication Implementation
 - [x] Set up JWT Authentication plugin in WooCommerce
-- [ ] Create API service for authentication
-  - Login with email/password
-  - Registration flow
-  - Password reset functionality
-  - Token management
-- [ ] Implement secure token storage
-  - Use `flutter_secure_storage` for JWT tokens
-  - Handle token refresh flow
-  - Implement auto-login on app start
+- [x] Create API service for authentication
+  - [x] Login with email/password
+  - [x] Registration flow
+  - [x] Password reset functionality
+  - [x] Token management
+- [x] Implement secure token storage
+  - [x] Use `flutter_secure_storage` for JWT tokens
+  - [x] Handle token refresh flow
+  - [x] Implement auto-login on app start
 
 ### 1.2 Basic User Screens
-- [ ] Login Screen
-  - Email/password fields
-  - Remember me option
-  - Forgot password link
-  - Register button
-- [ ] Registration Screen
-  - Required user fields
-  - Password requirements
-  - Terms acceptance
+- [x] Login Screen
+  - [x] Email/password fields
+  - [x] Remember me option
+  - [x] Forgot password link
+  - [x] Register button
+- [x] Registration Screen
+  - [x] Required user fields
+  - [x] Password requirements
+  - [x] Terms acceptance
+  - [x] Form validation
+  - [x] Error handling
 - [ ] Password Reset Flow
   - Email input screen
   - Reset link handling
