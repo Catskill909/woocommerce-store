@@ -25,6 +25,32 @@ class Category {
     this.children,
   });
 
+  Category copyWith({
+    int? id,
+    String? name,
+    String? description,
+    String? slug,
+    String? imageUrl,
+    int? count,
+    int? parent,
+    String? display,
+    int? menuOrder,
+    List<Category>? children,
+  }) {
+    return Category(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      slug: slug ?? this.slug,
+      imageUrl: imageUrl ?? this.imageUrl,
+      count: count ?? this.count,
+      parent: parent ?? this.parent,
+      display: display ?? this.display,
+      menuOrder: menuOrder ?? this.menuOrder,
+      children: children ?? this.children,
+    );
+  }
+
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
       id: json['id'],

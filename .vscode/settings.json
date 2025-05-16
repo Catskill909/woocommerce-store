@@ -1,0 +1,23 @@
+{
+    // Disable PHP validation for all files
+    "php.validate.enable": false,
+    
+    // Exclude wordpress-plugins directory from all validations
+    "files.exclude": {
+        "**/wordpress-plugins": true
+    },
+    
+    // Disable all validations for PHP files in wordpress-plugins
+    "files.associations": {
+        "**/wordpress-plugins/*.php": "plaintext"
+    },
+    
+    // Disable PHP Intelephense validation
+    "intelephense.enabled": false,
+    
+    // Hide problems panel for PHP files
+    "problems.decorations.enabled": false,
+    
+    // Disable PHP language features
+    "php.validate.run": "onSave"
+}
